@@ -20,7 +20,7 @@ public class PersonDaoFile implements PersonDao {
     private static final String FILE_NAME = "datasource.txt";
 
     private static final String PERSON = "PERSON";
-    private static final String PASSWORD = "PASSWORD";
+    // private static final String PASSWORD = "PASSWORD";
     private static final String DELIMITER = ";";
     // private static final String PASSOWRD = "PASSWORD";
 
@@ -38,31 +38,18 @@ public class PersonDaoFile implements PersonDao {
             for (String line : lines) {
                 String[] tab = line.split(DELIMITER);
 
-
-                if (tab[0].equals(PERSON)) {
-
-                    persons.add(getPersonWithGivenParams(tab));
-//                }else if(tab[0].equals(PASSWORD)){
-//
-//                    persons.get(persons.size()-1)
-//                            .getPassword()
-//                            .
-//                }
-
-                }
-
+                persons.add(getPersonWithGivenParams(tab));
             }
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException e1) {
+            e1.printStackTrace();
         }
         return persons;
     }
 
-
-//------------metoda pomocnicza---------------
+    //------------metoda pomocnicza---------------
     private Person getPersonWithGivenParams(String[] params) {
-        return new Person(params[1], params[2], params[3], params[4], params[5], null);
+        return new Person(params[1], params[2], params[3], params[4]);
     }
 
 
@@ -73,15 +60,14 @@ public class PersonDaoFile implements PersonDao {
             for (Person person : persons) {
                 Files.write(PATH, getPersonAsString(person).getBytes(), StandardOpenOption.APPEND);
             }
-        }
-    catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             return false;
-    }
+        }
         return true;
     }
 
-    private String getPersonAsString(Person person){
+    private String getPersonAsString(Person person) {
         StringBuilder sb = new StringBuilder();
         sb.append(PERSON)
                 .append(DELIMITER)
@@ -92,6 +78,7 @@ public class PersonDaoFile implements PersonDao {
                 .append(person.getLogin())
                 .append(DELIMITER)
                 .append(person.getPassword())
+                .append(DELIMITER)
                 .append("\n");
         return sb.toString();
     }
