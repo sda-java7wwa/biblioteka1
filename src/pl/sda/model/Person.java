@@ -9,7 +9,7 @@ public class Person {
     private String login;
     private String password;
 
-    public Person(String name, String surname, String login, String password) {
+    public Person(String s, String param, String name, String surname, String login, String password) {
         this.name = name;
         this.surname = surname;
         this.login = login;
