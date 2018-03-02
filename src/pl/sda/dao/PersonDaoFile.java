@@ -2,6 +2,12 @@ package pl.sda.dao;
 
 import pl.sda.model.Person;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,16 +15,85 @@ import java.util.List;
  */
 
 //zapis i odczyt do pliku robimy poprzez Serializację i Desarializację!
-public class PersonDaoFile implements PersonDao{
+public class PersonDaoFile implements PersonDao {
+
+    private static final String FILE_NAME = "datasource.txt";
+
+    private static final String PERSON = "PERSON";
+    private static final String PASSWORD = "PASSWORD";
+    private static final String DELIMITER = ";";
+    // private static final String PASSOWRD = "PASSWORD";
+
+    private static final Path PATH = Paths.get(FILE_NAME);
 
 
     @Override
     public List<Person> getPersons() {
-        return null;
+
+        List<Person> persons = new ArrayList<>();
+
+        try {
+            List<String> lines = Files.readAllLines(PATH);
+
+            for (String line : lines) {
+                String[] tab = line.split(DELIMITER);
+
+
+                if (tab[0].equals(PERSON)) {
+
+                    persons.add(getPersonWithGivenParams(tab));
+//                }else if(tab[0].equals(PASSWORD)){
+//
+//                    persons.get(persons.size()-1)
+//                            .getPassword()
+//                            .
+//                }
+
+                }
+
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return persons;
     }
 
-    @Override
-    public boolean savePersons(List<Person> clients) {
-        return false;
+
+//------------metoda pomocnicza---------------
+    private Person getPersonWithGivenParams(String[] params) {
+        return new Person(params[1], params[2], params[3], params[4], params[5], null);
     }
+
+
+    @Override
+    public boolean savePersons(List<Person> persons) {
+
+        try {
+            for (Person person : persons) {
+                Files.write(PATH, getPersonAsString(person).getBytes(), StandardOpenOption.APPEND);
+            }
+        }
+    catch(IOException e){
+            e.printStackTrace();
+            return false;
+    }
+        return true;
+    }
+
+    private String getPersonAsString(Person person){
+        StringBuilder sb = new StringBuilder();
+        sb.append(PERSON)
+                .append(DELIMITER)
+                .append(person.getName())
+                .append(DELIMITER)
+                .append(person.getSurname())
+                .append(DELIMITER)
+                .append(person.getLogin())
+                .append(DELIMITER)
+                .append(person.getPassword())
+                .append("\n");
+        return sb.toString();
+    }
+
 }
