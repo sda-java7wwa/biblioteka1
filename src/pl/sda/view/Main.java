@@ -12,6 +12,7 @@ public class Main {
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
+        PersonServiceImplementation personServiceImplementation = new PersonServiceImplementation();
         int input = scanner.nextInt();
         System.out.println("Wybierz:\n1 - Logowanie\n2 - Rejestracja\n0 - Zakonczenie Programu");
 
@@ -27,7 +28,7 @@ public class Main {
                 String login1 = scanner.next();
                 System.out.println("Podaj Hasło");
                 String password = scanner.next();
-                login(login1, password);
+                personServiceImplementation.login(login1, password);
                 break;
 
             case 2:
@@ -41,7 +42,7 @@ public class Main {
                 String password1 = scanner.next();
                 System.out.println("Podaj Hasło (potwierdzenie):");
                 String password2 = scanner.next();
-                signUp(name, surname, login2, password1, password2);
+                personServiceImplementation.signUp(name, surname, login2, password1, password2);
                 break;
             default:
                 System.out.println("Coś poszło nie tak, spróbuj jeszcze raz");
