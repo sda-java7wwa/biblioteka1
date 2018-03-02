@@ -20,6 +20,6 @@ public interface PersonDao {
     // nie udalo sie zapisac bo costam
 
     //przekazujemy liste klientow ktorych chcemy zapisac
-    boolean savePersons(List<Person> personss);
+    boolean savePersons(List<Person> persons);
 
 }
