@@ -7,16 +7,21 @@ import pl.sda.model.Person;
 /**
  * Created by yulia on 02.03.2018 at 19:17
  */
-public class PersonServiceImplementation implements PersonService{
+public class PersonServiceImpl implements PersonService{
     private PersonDao personDao = new PersonDaoFile();
 
     @Override
     public boolean signUp(String name, String surname, String login, String password1, String password2) {
-        if (loginNotExists(login)){
-            if (password1.equals(password2)) {
-                new Person(name, surname, login, password1);
-                return true;
+        try {
+            if (loginNotExists(login)){
+                if (password1.equals(password2)) {
+                    personDao.savePerson(new Person(name, surname, login, password1));
+                    return true;
+                }
             }
+        } catch (NullPointerException e){
+            System.out.println("Stream is empty");
+            return false;
         }
         return false;
     }
