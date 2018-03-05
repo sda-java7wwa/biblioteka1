@@ -10,16 +10,7 @@ import java.util.Optional;
  */
 public interface PersonDao {
 
-    //dwie metody
-    //metoda , logika biznesowa nie bedzie wiedziala skad pobiera , ona dostaje klienta i juz
-    //zapisuje klientow z kontami
-
     List<Person> getPersons();
-
-    //metoda do zapisu , metoda zwraca boolean
-    // nie udalo sie zapisac bo costam
-
-    //przekazujemy liste klientow ktorych chcemy zapisac
-    boolean savePersons(List<Person> persons);
+    boolean savePerson(Person person);
 
 }
