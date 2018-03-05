@@ -12,9 +12,10 @@ public class Main {
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
+        String newLine = System.getProperty("line.separator");
         PersonServiceImplementation personServiceImplementation = new PersonServiceImplementation();
+        System.out.println("Wybierz:"+newLine+"1 - Logowanie"+newLine+"2 - Rejestracja"+newLine+"0 - Zakonczenie Programu");
         int input = scanner.nextInt();
-        System.out.println("Wybierz:\n1 - Logowanie\n2 - Rejestracja\n0 - Zakonczenie Programu");
 
         switch (input) {
             case 0:
