@@ -1,7 +1,6 @@
 package pl.sda.view;
 
-import com.sun.org.apache.xpath.internal.SourceTree;
-import pl.sda.service.PersonServiceImplementation;
+import pl.sda.service.PersonServiceImpl;
 
 import java.util.Scanner;
 
@@ -13,7 +12,7 @@ public class Main {
 
     public static void main(String[] args) {
         String newLine = System.getProperty("line.separator");
-        PersonServiceImplementation personServiceImplementation = new PersonServiceImplementation();
+        PersonServiceImpl personServiceImplementation = new PersonServiceImpl();
         System.out.println("Wybierz:"+newLine+"1 - Logowanie"+newLine+"2 - Rejestracja"+newLine+"0 - Zakonczenie Programu");
         int input = scanner.nextInt();
 
