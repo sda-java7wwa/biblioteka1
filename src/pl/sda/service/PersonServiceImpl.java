@@ -15,7 +15,7 @@ public class PersonServiceImpl implements PersonService{
         try {
             if (loginNotExists(login)){
                 if (password1.equals(password2)) {
-                    personDao.savePersons(new Person(name, surname, login, password1));
+                    personDao.savePerson(new Person(name, surname, login, password1));
                     return true;
                 }
             }
