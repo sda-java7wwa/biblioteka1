@@ -2,11 +2,7 @@ package pl.sda.dao;
 
 import pl.sda.model.Person;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,83 +13,48 @@ import java.util.List;
 //zapis i odczyt do pliku robimy poprzez Serializację i Desarializację!
 public class PersonDaoFile implements PersonDao {
 
-    private static final String FILE_NAME = "datasource.txt";
+    private static String FILE_NAME = "persons.bin";
 
-    private static final String PERSON = "PERSON";
-    private static final String PASSWORD = "PASSWORD";
-    private static final String DELIMITER = ";";
-    // private static final String PASSOWRD = "PASSWORD";
-
-    private static final Path PATH = Paths.get(FILE_NAME);
 
 
     @Override
     public List<Person> getPersons() {
-
-        List<Person> persons = new ArrayList<>();
-
-        try {
-            List<String> lines = Files.readAllLines(PATH);
-
-            for (String line : lines) {
-                String[] tab = line.split(DELIMITER);
-
-
-                if (tab[0].equals(PERSON)) {
-
-                    persons.add(getPersonWithGivenParams(tab));
-//                }else if(tab[0].equals(PASSWORD)){
-//
-//                    persons.get(persons.size()-1)
-//                            .getPassword()
-//                            .
-//                }
-
+        List<Person> list = new ArrayList<>();
+        Person deserializiedPerson = null;
+        do {
+            try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(FILE_NAME))) {
+                deserializiedPerson = (Person) inputStream.readObject();
+                if (deserializiedPerson != null) {
+                    list.add(deserializiedPerson);
                 }
 
+            } catch (FileNotFoundException e) {
+                System.out.println("Nie udało pobrać się z bazy");
+            } catch (ClassNotFoundException e) {
+                System.out.println("Nie udało pobrać się z bazy");
+            } catch (IOException e) {
+                System.out.println("Nie udało pobrać się z bazy");
             }
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return persons;
-    }
-
-
-//------------metoda pomocnicza---------------
-    private Person getPersonWithGivenParams(String[] params) {
-        return new Person(params[1], params[2], params[3], params[4], params[5], null);
+        } while (deserializiedPerson != null);
+        return list;
     }
 
 
     @Override
-    public boolean savePersons(List<Person> persons) {
-
+    public boolean savePerson(Person person) {
         try {
-            for (Person person : persons) {
-                Files.write(PATH, getPersonAsString(person).getBytes(), StandardOpenOption.APPEND);
-            }
-        }
-    catch(IOException e){
-            e.printStackTrace();
+            ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(FILE_NAME, true));
+            outputStream.writeObject(person);
+        } catch (FileNotFoundException e) {
+            System.out.println("Nie udało zapisac się do bazy");
             return false;
-    }
+        } catch (IOException e) {
+            System.out.println("Nie udało zapisac się do bazy");
+            return false;
+        }
         return true;
     }
 
-    private String getPersonAsString(Person person){
-        StringBuilder sb = new StringBuilder();
-        sb.append(PERSON)
-                .append(DELIMITER)
-                .append(person.getName())
-                .append(DELIMITER)
-                .append(person.getSurname())
-                .append(DELIMITER)
-                .append(person.getLogin())
-                .append(DELIMITER)
-                .append(person.getPassword())
-                .append("\n");
-        return sb.toString();
-    }
-
 }
+
