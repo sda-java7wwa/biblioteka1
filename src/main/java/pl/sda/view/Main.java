@@ -133,6 +133,7 @@ public class Main {
         }
     }
 
+    //FIXME robisz kolejny stan kazdy moment kiedy pytasz co dalej to nowy stan
     private static State handleInitCheckIfBookIsBorrowedORReturned(Scanner scanner){
         System.out.println("Co chcesz zrobić?");
         System.out.println("1 - Wypożyczyć ksiżke");

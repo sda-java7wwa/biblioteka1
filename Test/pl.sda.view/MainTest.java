@@ -1,5 +1,6 @@
 package pl.sda.view;
 
+import junit.framework.TestCase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +14,8 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by x on 2018-03-05 at 19:35
  */
-public class MainTest {
+public class MainTest //extends TestCase{
+{
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 
     @Before
@@ -55,7 +57,8 @@ public class MainTest {
 
                 "Podaj Hasło:" + newLine +
 
-                "Podaj Hasło (potwierdzenie):" + newLine ;
+                "Podaj Hasło (potwierdzenie):" + newLine +
+                "Nie udało pobrać się z bazy" + newLine ;
 
               //  "" + newLine;
 
@@ -67,4 +70,8 @@ public class MainTest {
 
 
     }
+
+//    public static void main(String[] args) {
+//        junit.textui.TestRunner.run(MainTest.class);
+//    }
 }
