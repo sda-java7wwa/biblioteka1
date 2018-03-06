@@ -13,9 +13,7 @@ import java.util.List;
 //zapis i odczyt do pliku robimy poprzez Serializację i Desarializację!
 public class PersonDaoFile implements PersonDao {
 
-
-
-    private static String FILE_NAME = "datasource.txt";
+    private static String FILE_NAME = "persons.txt";
 
 
 
@@ -30,10 +28,8 @@ public class PersonDaoFile implements PersonDao {
                     list.add(deserializiedPerson);
                 }
 
-                //FIXME cos co jest bledne ale zostawiamy na pozniej
-                //TODO "sysetem r" - komunikaty o bledzie technicznym
             } catch (FileNotFoundException e) {
-                System.out.println("Nie udało pobrać się z bazy");
+                System.out.println("Nie udało pobrac sie z bazy");
             } catch (ClassNotFoundException e) {
                 System.out.println("Nie udało pobrać się z bazy");
             } catch (IOException e) {
