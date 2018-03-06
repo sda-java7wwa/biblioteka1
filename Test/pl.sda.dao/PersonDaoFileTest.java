@@ -1,8 +1,9 @@
 package pl.sda.dao;
-
+//dwie versje sa nikompatybilne
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import pl.sda.model.Person;
+import pl.sda.service.PersonService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,19 +13,23 @@ import java.util.List;
  */
 public class PersonDaoFileTest {
 
+    //new PersonDao w beforze dac
     private PersonDaoFile personDaoFile = new PersonDaoFile();
 
 
     @Test
     public void testSavePersons(){
 
-        System.out.println("Test dymny");
+      //  System.out.println("Test dymny");
 
-//        List<Person> persons1 = new ArrayList<>();
-//
-//        persons1.add(new Person("Krzysztof", "Krupa", "Krisu", "123456"));
-//
-//        personDaoFile.savePerson((Person) persons1);
+        Person persons1 = new Person("Krzysztof", "Krupa", "Krisu", "123456");
+        Person persons2 = new Person("Tomek", "Domek", "Tom", "123456789");
+
+
+        personDaoFile.savePerson(persons1);
+        personDaoFile.savePerson(persons2);
+
+       // personDaoFile.getPersons();
 
     }
 
@@ -35,8 +40,8 @@ public class PersonDaoFileTest {
                 .forEach(System.out::print);
 
         Person person = personDaoFile
-                .getPersons().get(0);
-        Assertions.assertEquals(1,personDaoFile.getPersons().size());
+                .getPersons().get(1);
+      //  Assertions.assertEquals(1,personDaoFile.getPersons().size());
         Assertions.assertEquals("Krzysztof" , person.getName());
 
     }
