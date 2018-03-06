@@ -42,6 +42,7 @@ public class PersonServiceImpl implements PersonService {
         return personDao.getPersons()
                 .stream()
                 .anyMatch(person -> !person.getLogin().equals(login));
+
     }
 
     @Override
