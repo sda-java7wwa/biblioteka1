@@ -13,6 +13,8 @@ import java.util.Scanner;
  * Created by TOSHIBA-L775 on 2018-03-02.
  */
 public class Main {
+    public static final String PERSON_FILE_NAME = "persons-prod.txt";
+
     public enum State {
         INIT,
         DURING_LOGIN,
@@ -78,7 +80,7 @@ public class Main {
         String userlogin = scanner.next();
         System.out.println("Podaj hasło");
         String password = scanner.next();
-        PersonServiceImpl userService = new PersonServiceImpl();
+        PersonServiceImpl userService = new PersonServiceImpl(PERSON_FILE_NAME);
 
         try {
             currentUser = userService.login(userlogin, password);
@@ -101,7 +103,7 @@ public class Main {
         System.out.println("Podaj jeszcze raz  hasło");
         String userPassword2 = scanner.next();
 
-        PersonServiceImpl userService = new PersonServiceImpl();
+        PersonServiceImpl userService = new PersonServiceImpl(PERSON_FILE_NAME);
 
         try {
             currentUser = userService.signUp(userName, userSurname, userLogin, userPassword, userPassword2);
