@@ -1,10 +1,12 @@
 package pl.sda.view;
 
 import pl.sda.Exception.InvalidUserException;
+import pl.sda.model.Book;
 import pl.sda.model.Person;
 import pl.sda.service.LibraryServiceImpl;
 import pl.sda.service.PersonServiceImpl;
 
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -18,6 +20,8 @@ public class Main {
         LOGGED_IN,
         STOP
     }
+
+    private List<Book> bookList;
 
     private static Person currentUser = null;
 
