@@ -25,6 +25,22 @@ public class Book implements Serializable{
         this.id = id;
     }
 
+    public BookStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(BookStatus status) {
+        this.status = status;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
     public String getTitle() {
         return title;
     }
