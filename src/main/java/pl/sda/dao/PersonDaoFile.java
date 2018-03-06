@@ -48,9 +48,11 @@ public class PersonDaoFile implements PersonDao {
             outputStream.writeObject(person);
         } catch (FileNotFoundException e) {
             System.out.println("Nie udało zapisac się do bazy");
+            e.printStackTrace();
             return false;
         } catch (IOException e) {
             System.out.println("Nie udało zapisac się do bazy");
+            e.printStackTrace();
             return false;
         }
         return true;
