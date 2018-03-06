@@ -1,5 +1,8 @@
 package pl.sda.view;
 
+import pl.sda.Exception.InvalidUserException;
+import pl.sda.model.Person;
+import pl.sda.service.LibraryServiceImpl;
 import pl.sda.service.PersonServiceImpl;
 
 import java.util.Scanner;
@@ -8,48 +11,150 @@ import java.util.Scanner;
  * Created by TOSHIBA-L775 on 2018-03-02.
  */
 public class Main {
-    private static Scanner scanner = new Scanner(System.in);
+    public enum State {
+        INIT,
+        DURING_LOGIN,
+        DURING_REGISTRATION,
+        LOGGED_IN,
+        STOP
+    }
 
-    public static void main(String[] args) {
-        String newLine = System.getProperty("line.separator");
-        PersonServiceImpl personServiceImplementation = new PersonServiceImpl();
-        System.out.println("Wybierz:"+newLine+"1 - Logowanie"+newLine+"2 - Rejestracja"+newLine+"0 - Zakonczenie Programu");
-        int input = scanner.nextInt();
+    private static Person currentUser = null;
 
-        switch (input) {
-            case 0:
-                System.out.println("Koniec programu");
-                System.exit(0);
-                break;
+    public static void main(String[] args) throws InvalidUserException {
+        Scanner scanner = new Scanner(System.in);
 
+        State state = State.INIT;
+
+        while(state != State.STOP) {
+            switch (state) {
+                case INIT: {
+                    state = handleInit(scanner);
+                    break;
+                }
+                case DURING_LOGIN: {
+                    state = handleDuringLogin(scanner);
+                    break;
+                }
+                case DURING_REGISTRATION:
+                    state = handleDuringRegistration(scanner);
+                    break;
+                case LOGGED_IN:
+                    state = handleInitLoggedInShowBookAndShowCategory(scanner);
+                    break;
+                default:
+                        System.out.println("Podano zła opcje");
+            }
+        }
+    }
+
+    private static State handleInit(Scanner scanner) {
+        System.out.println("Dzień dobry");
+        System.out.println("Co chcesz zrobić?");
+        System.out.println("1 - zalogować się");
+        System.out.println("2 - zarejestrować się");
+        System.out.println("3 - wyjść z programu");
+
+        int answer = scanner.nextInt();
+        switch (answer) {
             case 1:
-                System.out.println("Logowanie:");
-                System.out.println("Podaj Login");
-                String login1 = scanner.next();
-                System.out.println("Podaj Hasło");
-                String password = scanner.next();
-                personServiceImplementation.login(login1, password);
-                break;
-
+                return State.DURING_LOGIN;
             case 2:
-                System.out.println("Podaj Imie:");
-                String name = scanner.next();
-                System.out.println("Podaj Nazwisko:");
-                String surname = scanner.next();
-                System.out.println("Podaj Login:");
-                String login2 = scanner.next();
-                System.out.println("Podaj Hasło:");
-                String password1 = scanner.next();
-                System.out.println("Podaj Hasło (potwierdzenie):");
-                String password2 = scanner.next();
-                personServiceImplementation.signUp(name, surname, login2, password1, password2);
-                break;
+                return State.DURING_REGISTRATION;
+            case 3:
+                return State.STOP;
             default:
-                System.out.println("Coś poszło nie tak, spróbuj jeszcze raz");
+                System.out.println("Podano złą opcję");
+                return State.INIT;
+        }
+    }
+
+    private static State handleDuringLogin(Scanner scanner) throws InvalidUserException{
+        System.out.println("Podaj login");
+        String userlogin = scanner.next();
+        System.out.println("Podaj hasło");
+        String password = scanner.next();
+        PersonServiceImpl userService = new PersonServiceImpl();
+
+        try {
+            currentUser = userService.login(userlogin, password);
+            return State.LOGGED_IN;
+        } catch (InvalidUserException ex){
+            return State.INIT;
         }
 
     }
 
+    private static State handleDuringRegistration(Scanner scanner) throws InvalidUserException{
+        System.out.println("Podaj Imie");
+        String userName = scanner.next();
+        System.out.println("Podaj Nazwisko");
+        String userSurname = scanner.next();
+        System.out.println("Podaj login");
+        String userLogin = scanner.next();
+        System.out.println("Podaj hasło");
+        String userPassword = scanner.next();
+        System.out.println("Podaj jeszcze raz  hasło");
+        String userPassword2 = scanner.next();
+
+        PersonServiceImpl userService = new PersonServiceImpl();
+
+        try {
+            currentUser = userService.signUp(userName, userSurname, userLogin, userPassword, userPassword2);
+            return State.LOGGED_IN;
+        } catch (InvalidUserException e){
+            return State.INIT;
+        }
+    }
+
+    private static State handleInitLoggedInShowBookAndShowCategory(Scanner scanner){
+        System.out.println("Co chcesz zrobić?");
+        System.out.println("1 - Wyswietł liste ksiazek");
+        System.out.println("2 - Wyswietł kategorie ksiazek");
+        System.out.println("3 - wyjść z programu");
+
+        LibraryServiceImpl libraryService = new LibraryServiceImpl();
+        int answer = scanner.nextInt();
+        switch (answer) {
+            case 1:
+                libraryService.showBooks();
+                handleInitCheckIfBookIsBorrowedORReturned(scanner);
+                return State.LOGGED_IN;
+            case 2:
+                //Trzeba jeszcze napisać metode showCategory w LibraryServiceImpl ;
+                //libraryService.showCategory();
+                handleInitCheckIfBookIsBorrowedORReturned(scanner);
+                return State.DURING_REGISTRATION;
+            case 3:
+                return State.STOP;
+            default:
+                System.out.println("Podano złą opcję");
+                return State.LOGGED_IN;
+        }
+    }
+
+    private static State handleInitCheckIfBookIsBorrowedORReturned(Scanner scanner){
+        System.out.println("Co chcesz zrobić?");
+        System.out.println("1 - Wypożyczyć ksiżke");
+        System.out.println("2 - Oddać książke");
+        System.out.println("3 - wyjść z programu");
+
+        LibraryServiceImpl libraryService = new LibraryServiceImpl();
+        int answer = scanner.nextInt();
+        switch (answer) {
+            case 1:
+                libraryService.checkIfBookIsBorrowed();
+                return State.LOGGED_IN;
+            case 2:
+                libraryService.checkIfBookIsReturned();
+                return State.DURING_REGISTRATION;
+            case 3:
+                return State.STOP;
+            default:
+                System.out.println("Podano złą opcję");
+                return State.LOGGED_IN;
+        }
+    }
 }
 
 
