@@ -8,8 +8,10 @@ import java.util.Objects;
 
 public class Library {
 
+
+    //FIXME to jest zbedne
     private List<Book> bookList;
-    private BookStatus status;
+    private BookStatus status;  //TODO status i person do book
     private Person person;
 
     public Library(List<Book> bookList, BookStatus status, Person person) {

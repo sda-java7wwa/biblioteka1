@@ -11,7 +11,7 @@ import java.util.stream.Stream;
  * Created by yulia on 02.03.2018 at 19:17
  */
 public class PersonServiceImpl implements PersonService{
-    private PersonDao personDao = new PersonDaoFile();
+    private PersonDaoFile personDao = new PersonDaoFile();
 
     @Override
     public Person signUp(String name, String surname, String login, String password1, String password2) throws
@@ -22,7 +22,6 @@ public class PersonServiceImpl implements PersonService{
                     Person person = new Person(name, surname, login, password1);
                     personDao.savePerson(person);
                     return person;
-                    //return personDao.getPersons().stream().findAny().get();
                 } else {
                     throw new InvalidUserException("Passwords not equal");
                 }
