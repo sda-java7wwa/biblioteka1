@@ -124,7 +124,7 @@ public class Main {
                 //Trzeba jeszcze napisać metode showCategory w LibraryServiceImpl ;
                 //libraryService.showCategory();
                 handleInitCheckIfBookIsBorrowedORReturned(scanner);
-                return State.DURING_REGISTRATION;
+                return State.LOGGED_IN;
             case 3:
                 return State.STOP;
             default:
@@ -147,7 +147,7 @@ public class Main {
                 return State.LOGGED_IN;
             case 2:
                 libraryService.checkIfBookIsReturned();
-                return State.DURING_REGISTRATION;
+                return State.LOGGED_IN;
             case 3:
                 return State.STOP;
             default:
