@@ -2,11 +2,12 @@ package pl.sda.model;
 
 import pl.sda.bookEnum.BookCategory;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class Book {
+public class Book implements Serializable{
     private String title;
     private String author;
     private BookCategory category;
