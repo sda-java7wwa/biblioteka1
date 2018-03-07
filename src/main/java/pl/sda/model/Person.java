@@ -3,7 +3,7 @@ package pl.sda.model;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Person implements Serializable{
+public class Person implements Serializable {
 
     private String name;
     private String surname;

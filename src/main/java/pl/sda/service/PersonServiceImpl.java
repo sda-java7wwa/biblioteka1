@@ -5,6 +5,7 @@ import pl.sda.dao.PersonDao;
 import pl.sda.dao.PersonDaoFile;
 import pl.sda.model.Person;
 
+import java.util.NoSuchElementException;
 import java.util.stream.Stream;
 
 /**
@@ -51,16 +52,18 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public Person login(String login, String password) throws InvalidUserException {
-        if (personDao.getPersons().stream().anyMatch(person -> person.getLogin().equals(login)
-                && person.getPassword().equals(password))) {
-            return personDao.getPersons()
-                    .stream()
-                    .filter(person -> person.getLogin().equals(login) && person.getPassword().equals(password))
-                    .findFirst()
-                    .get();
-        } else {
-            throw new InvalidUserException("Invalid login or password");
-        }
+            try {
+                return personDao.getPersons()
+                        .stream()
+                        .filter(person -> person.getLogin().equals(login) && person.getPassword().equals(password))
+                        .findFirst()
+                        .get();
+
+            } catch(NoSuchElementException e) {
+                throw new InvalidUserException("Invalid login or password");
+            } catch (NullPointerException e) {
+                throw new InvalidUserException("Invalid login or password");
+            }
     }
 
 }

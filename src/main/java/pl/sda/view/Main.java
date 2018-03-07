@@ -150,10 +150,10 @@ public class Main {
         int answer = scanner.nextInt();
         switch (answer) {
             case 1:
-                libraryService.checkIfBookIsBorrowed();
+              //  libraryService.checkIfBookIsBorrowed();
                 return State.LOGGED_IN;
             case 2:
-                libraryService.checkIfBookIsReturned();
+              //  libraryService.checkIfBookIsReturned();
                 return State.LOGGED_IN;
             case 3:
                 return State.STOP;
