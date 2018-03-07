@@ -28,17 +28,24 @@ public class PersonDaoFile implements PersonDao {
             try {
                 ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(this.fileName));
                 deserializiedPerson = (Person) inputStream.readObject();
+
                 if (deserializiedPerson != null) {
                     list.add(deserializiedPerson);
                 }
             } catch (EOFException e){
-                    break;
+                    return null;
             } catch (FileNotFoundException e) {
-                System.out.println("Nie udało pobrac sie z bazy");
+                System.out.println("Nie udało pobrać się z bazy");
+                e.printStackTrace();
+                return null;
+
+
             } catch (ClassNotFoundException e) {
                 System.out.println("Nie udało pobrać się z bazy");
+                return null;
             } catch (IOException e) {
                 System.out.println("Nie udało pobrać się z bazy");
+                return null;
             }
 
         } while (deserializiedPerson != null);
