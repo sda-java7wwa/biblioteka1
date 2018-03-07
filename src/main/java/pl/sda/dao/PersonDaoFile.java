@@ -12,8 +12,11 @@ import java.util.List;
 
 //zapis i odczyt do pliku robimy poprzez Serializację i Desarializację!
 public class PersonDaoFile implements PersonDao {
+    private String fileName;
 
-    private static String FILE_NAME = "persons.txt";
+    public PersonDaoFile(String fileName) {
+        this.fileName = fileName;
+    }
 
 
 
@@ -22,12 +25,16 @@ public class PersonDaoFile implements PersonDao {
         List<Person> list = new ArrayList<>();
         Person deserializiedPerson = null;
         do {
-            try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(FILE_NAME))) {
+            try {
+                ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(this.fileName));
                 deserializiedPerson = (Person) inputStream.readObject();
                 if (deserializiedPerson != null) {
                     list.add(deserializiedPerson);
                 }
 
+            } catch (EOFException e){
+
+                break;
             } catch (FileNotFoundException e) {
                 System.out.println("Nie udało pobrac sie z bazy");
             } catch (ClassNotFoundException e) {
@@ -44,7 +51,7 @@ public class PersonDaoFile implements PersonDao {
     @Override
     public boolean savePerson(Person person) {
         try {
-            ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(FILE_NAME, true));
+            ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(this.fileName, true));
             outputStream.writeObject(person);
         } catch (FileNotFoundException e) {
             System.out.println("Nie udało zapisac się do bazy");

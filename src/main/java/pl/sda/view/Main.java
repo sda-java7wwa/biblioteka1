@@ -1,16 +1,20 @@
 package pl.sda.view;
 
 import pl.sda.Exception.InvalidUserException;
+import pl.sda.model.Book;
 import pl.sda.model.Person;
-import pl.sda.service.LibraryServiceImpl;
+import pl.sda.service.BookServiceImpl;
 import pl.sda.service.PersonServiceImpl;
 
+import java.util.List;
 import java.util.Scanner;
 
 /**
  * Created by TOSHIBA-L775 on 2018-03-02.
  */
 public class Main {
+    public static final String PERSON_FILE_NAME = "persons-prod.txt";
+
     public enum State {
         INIT,
         DURING_LOGIN,
@@ -18,6 +22,8 @@ public class Main {
         LOGGED_IN,
         STOP
     }
+
+    private List<Book> bookList;
 
     private static Person currentUser = null;
 
@@ -74,7 +80,7 @@ public class Main {
         String userlogin = scanner.next();
         System.out.println("Podaj hasło");
         String password = scanner.next();
-        PersonServiceImpl userService = new PersonServiceImpl();
+        PersonServiceImpl userService = new PersonServiceImpl(PERSON_FILE_NAME);
 
         try {
             currentUser = userService.login(userlogin, password);
@@ -97,7 +103,7 @@ public class Main {
         System.out.println("Podaj jeszcze raz  hasło");
         String userPassword2 = scanner.next();
 
-        PersonServiceImpl userService = new PersonServiceImpl();
+        PersonServiceImpl userService = new PersonServiceImpl(PERSON_FILE_NAME);
 
         try {
             currentUser = userService.signUp(userName, userSurname, userLogin, userPassword, userPassword2);
@@ -113,7 +119,7 @@ public class Main {
         System.out.println("2 - Wyswietł kategorie ksiazek");
         System.out.println("3 - wyjść z programu");
 
-        LibraryServiceImpl libraryService = new LibraryServiceImpl();
+        BookServiceImpl libraryService = new BookServiceImpl();
         int answer = scanner.nextInt();
         switch (answer) {
             case 1:
@@ -121,7 +127,7 @@ public class Main {
                 handleInitCheckIfBookIsBorrowedORReturned(scanner);
                 return State.LOGGED_IN;
             case 2:
-                //Trzeba jeszcze napisać metode showCategory w LibraryServiceImpl ;
+                //Trzeba jeszcze napisać metode showCategory w BookServiceImpl ;
                 //libraryService.showCategory();
                 handleInitCheckIfBookIsBorrowedORReturned(scanner);
                 return State.LOGGED_IN;
@@ -140,7 +146,7 @@ public class Main {
         System.out.println("2 - Oddać książke");
         System.out.println("3 - wyjść z programu");
 
-        LibraryServiceImpl libraryService = new LibraryServiceImpl();
+        BookServiceImpl libraryService = new BookServiceImpl();
         int answer = scanner.nextInt();
         switch (answer) {
             case 1:

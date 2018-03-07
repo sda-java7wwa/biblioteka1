@@ -2,7 +2,6 @@ package pl.sda.service;
 
 import pl.sda.bookEnum.BookStatus;
 import pl.sda.model.Book;
-import pl.sda.model.Library;
 
 public class LibraryServiceImpl implements LibraryService {
     private Library library;

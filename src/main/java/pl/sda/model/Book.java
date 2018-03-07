@@ -1,9 +1,11 @@
 package pl.sda.model;
 
 import pl.sda.bookEnum.BookCategory;
+import pl.sda.bookEnum.BookStatus;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -12,12 +14,31 @@ public class Book implements Serializable{
     private String author;
     private BookCategory category;
     private int id;
+    private BookStatus status;  //status i person do book
+    private Person person;
+
 
     public Book(String title, String author, BookCategory category, int id) {
         this.title = title;
         this.author = author;
         this.category = category;
         this.id = id;
+    }
+
+    public BookStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(BookStatus status) {
+        this.status = status;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
     public String getTitle() {

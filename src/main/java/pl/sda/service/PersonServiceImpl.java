@@ -11,7 +11,11 @@ import java.util.stream.Stream;
  * Created by yulia on 02.03.2018 at 19:17
  */
 public class PersonServiceImpl implements PersonService {
-    private PersonDaoFile personDao = new PersonDaoFile();
+    private PersonDaoFile personDao;
+
+    public PersonServiceImpl(String fileName) {
+        this.personDao = new PersonDaoFile(fileName);
+    }
 
     @Override
     public Person signUp(String name, String surname, String login, String password1, String password2) throws

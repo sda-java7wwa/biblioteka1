@@ -1,5 +1,7 @@
 package pl.sda.dao;
 //dwie versje sa nikompatybilne
+import org.junit.After;
+import org.junit.Before;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import pl.sda.model.Person;
@@ -12,10 +14,20 @@ import java.util.List;
  * Created by x on 2018-03-05 at 19:06
  */
 public class PersonDaoFileTest {
+    public static final String PERSON_FILE_NAME = "persons-test.txt";
 
     //new PersonDao w beforze dac
-    private PersonDaoFile personDaoFile = new PersonDaoFile();
+    private PersonDaoFile personDaoFile;
 
+    @Before
+    public void setUp() {
+        personDaoFile = new PersonDaoFile(PERSON_FILE_NAME);
+    }
+
+    @After
+    public void cleanUp() {
+        // TODO remove persons file
+    }
 
     @Test
     public void testSavePersons(){
