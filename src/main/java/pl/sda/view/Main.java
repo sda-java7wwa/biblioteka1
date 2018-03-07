@@ -3,7 +3,7 @@ package pl.sda.view;
 import pl.sda.Exception.InvalidUserException;
 import pl.sda.model.Book;
 import pl.sda.model.Person;
-import pl.sda.service.LibraryServiceImpl;
+import pl.sda.service.BookServiceImpl;
 import pl.sda.service.PersonServiceImpl;
 
 import java.util.List;
@@ -119,7 +119,7 @@ public class Main {
         System.out.println("2 - Wyswietł kategorie ksiazek");
         System.out.println("3 - wyjść z programu");
 
-        LibraryServiceImpl libraryService = new LibraryServiceImpl();
+        BookServiceImpl libraryService = new BookServiceImpl();
         int answer = scanner.nextInt();
         switch (answer) {
             case 1:
@@ -127,7 +127,7 @@ public class Main {
                 handleInitCheckIfBookIsBorrowedORReturned(scanner);
                 return State.LOGGED_IN;
             case 2:
-                //Trzeba jeszcze napisać metode showCategory w LibraryServiceImpl ;
+                //Trzeba jeszcze napisać metode showCategory w BookServiceImpl ;
                 //libraryService.showCategory();
                 handleInitCheckIfBookIsBorrowedORReturned(scanner);
                 return State.LOGGED_IN;
@@ -146,7 +146,7 @@ public class Main {
         System.out.println("2 - Oddać książke");
         System.out.println("3 - wyjść z programu");
 
-        LibraryServiceImpl libraryService = new LibraryServiceImpl();
+        BookServiceImpl libraryService = new BookServiceImpl();
         int answer = scanner.nextInt();
         switch (answer) {
             case 1:
