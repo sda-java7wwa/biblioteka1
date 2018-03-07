@@ -31,10 +31,8 @@ public class PersonDaoFile implements PersonDao {
                 if (deserializiedPerson != null) {
                     list.add(deserializiedPerson);
                 }
-
             } catch (EOFException e){
-
-                break;
+                    break;
             } catch (FileNotFoundException e) {
                 System.out.println("Nie udało pobrac sie z bazy");
             } catch (ClassNotFoundException e) {
