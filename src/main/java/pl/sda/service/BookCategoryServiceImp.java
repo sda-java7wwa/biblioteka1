@@ -14,10 +14,10 @@ public class BookCategoryServiceImp implements BookCategoryService {
     }
 
     @Override
-    public void showCategory(String nazwaBookCategory) {
+    public void showAllCategory() {
         bookCategoriesDaoFile.getListOfCategories()
                 .stream()
-                .filter(bookCategory1 -> bookCategory1.getName().equals(nazwaBookCategory))
+                .map(BookCategory::getName)
                 .forEach(System.out::println);
     }
 }
