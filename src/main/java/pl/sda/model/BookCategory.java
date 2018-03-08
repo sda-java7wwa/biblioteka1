@@ -32,4 +32,12 @@ public class BookCategory implements Serializable{
     public String getName() {
         return name;
     }
+
+    public List<BookCategory> getBookCategories() {
+        return bookCategories;
+    }
+
+    public List<Book> getBookList() {
+        return bookList;
+    }
 }
