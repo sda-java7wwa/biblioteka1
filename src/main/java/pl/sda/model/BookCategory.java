@@ -1,5 +1,6 @@
 package pl.sda.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -7,7 +8,7 @@ import java.util.Scanner;
 /**
  * Created by TOSHIBA-L775 on 2018-03-07.
  */
-public class BookCategory {
+public class BookCategory implements Serializable{
     private String name;
     private List<BookCategory> bookCategories;
     private List<Book> bookList;
@@ -28,4 +29,7 @@ public class BookCategory {
         this.bookCategories.add(bookCategory);
     }
 
+    public String getName() {
+        return name;
+    }
 }
