@@ -9,6 +9,10 @@ import pl.sda.model.BookCategory;
 public class BookCategoryServiceImp implements BookCategoryService {
     private BookCategoriesDaoFile bookCategoriesDaoFile;
 
+    public BookCategoryServiceImp(String fileName) {
+        this.bookCategoriesDaoFile = new BookCategoriesDaoFile(fileName);
+    }
+
     @Override
     public void showCategory(String nazwaBookCategory) {
         bookCategoriesDaoFile.getListOfCategories()
