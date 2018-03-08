@@ -21,33 +21,26 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public Person signUp(String name, String surname, String login, String password1, String password2) throws
             InvalidUserException {
-        try {
-            if (loginNotExists(login)) {
-                if (password1.equals(password2)) {
-                    Person person = new Person(name, surname, login, password1);
-                    personDao.savePerson(person);
-                    return person;
-                } else {
-                    throw new InvalidUserException("Passwords not equal");
-                }
+        if (loginNotExists(login)) {
+            if (password1.equals(password2)) {
+                Person person = new Person(name, surname, login, password1);
+                personDao.savePerson(person);
+                return person;
             } else {
-                throw new InvalidUserException("This login is already taken");
+                throw new InvalidUserException("Passwords not equal");
             }
-
-        } catch (NullPointerException e) {
-            System.out.println("Stream is empty");
+        } else {
+            throw new InvalidUserException("This login is already taken");
         }
-        return null;
     }
 
     private boolean loginNotExists(String login) {
-        if (personDao.getPersons()==null) {
+        if (personDao.getPersons() == null) {
             return true;
         }
         return personDao.getPersons()
                 .stream()
                 .anyMatch(person -> !person.getLogin().equals(login));
-
     }
 
     @Override
@@ -58,7 +51,6 @@ public class PersonServiceImpl implements PersonService {
                         .filter(person -> person.getLogin().equals(login) && person.getPassword().equals(password))
                         .findFirst()
                         .get();
-
             } catch(NoSuchElementException e) {
                 throw new InvalidUserException("Invalid login or password");
             } catch (NullPointerException e) {
