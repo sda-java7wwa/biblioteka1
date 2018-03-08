@@ -6,5 +6,5 @@ import pl.sda.model.BookCategory;
  * Created by yulia on 07.03.2018 at 21:35
  */
 public interface BookCategoryService {
-    void showCategory(BookCategory bookCategory);
+    void showCategory(String nazwaBookCategory);
 }
