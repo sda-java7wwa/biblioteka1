@@ -1,15 +1,19 @@
 package pl.sda.service;
 
+import pl.sda.dao.BookCategoriesDaoFile;
 import pl.sda.model.BookCategory;
 
 /**
  * Created by yulia on 07.03.2018 at 21:36
  */
 public class BookCategoryServiceImp implements BookCategoryService {
-    private BookCategory bookCategory;
+    private BookCategoriesDaoFile bookCategoriesDaoFile;
 
     @Override
-    public void showCategory(BookCategory bookCategory) {
-
+    public void showCategory(String nazwaBookCategory) {
+        bookCategoriesDaoFile.getListOfCategories()
+                .stream()
+                .filter(bookCategory1 -> bookCategory1.getName().equals(nazwaBookCategory))
+                .forEach(System.out::println);
     }
 }
